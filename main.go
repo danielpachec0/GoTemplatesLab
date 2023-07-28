@@ -8,14 +8,14 @@ import (
 )
 
 func main() {
-	tpl := template.Must(template.ParseFiles("templates/test.gohtml"))
+	tpl := template.Must(template.ParseFiles("templates/basic/test.gohtml"))
 	_ = tpl.Execute(os.Stdout, "go")
 
 	fmt.Println("------------------")
 	// when the data attribute is structured its values
 	// can be accessed by calling the dot operator
 	// with its exported fields
-	tpl = template.Must(template.ParseFiles("templates/testStruct.gohtml"))
+	tpl = template.Must(template.ParseFiles("templates/basic/testStruct.gohtml"))
 	_ = tpl.Execute(os.Stdout, struct {
 		Name string
 		Age  int
@@ -32,7 +32,7 @@ func main() {
 	// Alongside the if operator its possible to use {{ else }}
 	// and {{ else if . }}
 
-	tpl2 := template.Must(template.ParseFiles("templates/testConditional.gohtml"))
+	tpl2 := template.Must(template.ParseFiles("templates/basic/testConditional.gohtml"))
 	_ = tpl2.Execute(os.Stdout, true)
 	_ = tpl2.Execute(os.Stdout, false)
 
@@ -41,7 +41,7 @@ func main() {
 	// and if needed access the data stored inside of them
 	// with the dot
 
-	tpl3 := template.Must(template.ParseFiles("templates/testRange.gohtml"))
+	tpl3 := template.Must(template.ParseFiles("templates/basic/testRange.gohtml"))
 	_ = tpl3.Execute(os.Stdout, []string{"test1", "test2", "test3"})
 
 	fmt.Println("------------------")
@@ -51,7 +51,7 @@ func main() {
 	// Alongside the range operator it is possible to use
 	// {{break}} and {{continue}} for better control of
 	// execution flow
-	tpl = template.Must(template.ParseFiles("templates/testRangeStruct.gohtml"))
+	tpl = template.Must(template.ParseFiles("templates/basic/testRangeStruct.gohtml"))
 
 	type dog struct {
 		Name  string
@@ -67,7 +67,7 @@ func main() {
 	// used together to elaborate how the output of the
 	// evaluated template will be depending on its input data
 
-	tpl = template.Must(template.ParseFiles("templates/testRangeConditionalChain.gohtml"))
+	tpl = template.Must(template.ParseFiles("templates/basic/testRangeConditionalChain.gohtml"))
 	_ = tpl.Execute(os.Stdout, dogs)
 
 	fmt.Println("------------------")
@@ -90,7 +90,7 @@ func main() {
 
 	tplInjected := template.Must(template.New("testFunctionInjection.gohtml").
 		Funcs(funcMap).
-		ParseFiles("templates/testFunctionInjection.gohtml"))
+		ParseFiles("templates/basic/testFunctionInjection.gohtml"))
 	// Note that to use `Funcs` is needed to already have allocated the template wit `New`
 	// and for New` to work with `ParseFiles` the name *must* be equal to the file name being parsed
 
