@@ -1,0 +1,8 @@
+Old Dogs:
+{{ range . }}
+    {{if gt .Age 10}}
+        {{.Name }} is an old doggy!
+    {{else}}
+        {{ .Name }} is a Baby!
+    {{end}}
+{{end}}
