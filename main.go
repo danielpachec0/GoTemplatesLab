@@ -2,9 +2,10 @@ package main
 
 import (
 	"fmt"
+	"html/template"
+	"log"
 	"os"
 	"strings"
-	"text/template"
 )
 
 func main() {
@@ -95,4 +96,23 @@ func main() {
 	// and for New` to work with `ParseFiles` the name *must* be equal to the file name being parsed
 
 	_ = tplInjected.Execute(os.Stdout, "text")
+
+	fmt.Println("------------------")
+	// Creating a basic template composition by defining 3 templates(header, body and footer)
+	// and using them in a separated `composition.gohtml` template without any internal data
+
+	prefix := "templates/composition/basic/"
+	files := []string{
+		prefix + "header.gohtml",
+		prefix + "body.gohtml",
+		prefix + "footer.gohtml",
+		prefix + "composition.gohtml",
+	}
+
+	tpl, err := template.ParseFiles(files...)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(tpl.DefinedTemplates())
+	_ = tpl.ExecuteTemplate(os.Stdout, "composition.gohtml", nil)
 }
