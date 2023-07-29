@@ -113,6 +113,55 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println(tpl.DefinedTemplates())
 	_ = tpl.ExecuteTemplate(os.Stdout, "composition.gohtml", nil)
+
+	prefix = "templates/composition/advanced/"
+	files = []string{
+		prefix + "header.gohtml",
+		prefix + "body.gohtml",
+		prefix + "footer.gohtml",
+		prefix + "composition.gohtml",
+	}
+	tpl, err = template.ParseFiles(files...)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	type Header struct {
+		Title string
+	}
+
+	type Body struct {
+		Title string
+		Text  string
+	}
+
+	type Footer struct {
+		Links []string
+	}
+
+	type dataType struct {
+		Header Header
+		Footer Footer
+		Body   Body
+	}
+
+	data := dataType{
+		Header: Header{
+			Title: "Test Title",
+		},
+		Body: Body{
+			Title: "Body Test Title",
+			Text:  "Text to be inject in the template file...",
+		},
+		Footer: Footer{
+			Links: []string{"A", "B", "C"},
+		},
+	}
+
+	err = tpl.ExecuteTemplate(os.Stdout, "composition.gohtml", data)
+	if err != nil {
+		log.Fatal(err)
+	}
+	//fmt.Println(tpl.Tree)
 }
